@@ -20,13 +20,29 @@ func _ready() -> void:
 	var seq = main._screens[3]
 	var pid = GameState.new_project("拾音练习 / Found sounds", 16)
 	seq._open_project(pid)
-	for t in 4:
-		for step in seq.DEFAULT_PATTERNS[t].size():
-			if seq.DEFAULT_PATTERNS[t][step] == 1:
-				var cell = seq._cells[t][step]
-				cell.set_note(true, false, 0)
-				seq._sync_cell(cell, false)
+	for step in [0, 4, 8, 12]:
+		seq._cells[0][step].set_note(true, false, 0)
+		seq._sync_cell(seq._cells[0][step], false)
+	for step in [4, 12]:
+		seq._cells[1][step].set_note(true, false, 0)
+		seq._sync_cell(seq._cells[1][step], false)
 	await _capture("sequencer")
+	# This fixture records the audio engine directly; keep UI auto-stop counters
+	# out of the two independent demo takes.
+	Audio.step_changed.disconnect(seq._on_step)
+	var before: PackedFloat32Array = await _record_loop(4.0)
+	seq._ai_continue()
+	await _capture("continuation")
+	var after: PackedFloat32Array = await _record_loop(4.0)
+	before.append_array(after)
+	DirAccess.make_dir_recursive_absolute("res://docs/audio")
+	if not Audio.write_wav("res://docs/audio/quickstart-before-after.wav", before):
+		printerr("Audio demo export failed")
+		get_tree().quit(1)
+		return
+	print("Audio demo saved: 4 seconds of seeds, 4 seconds after continuation")
+	Audio._player.stop()
+	Audio._playback = null
 	main.queue_free()
 	await get_tree().process_frame
 	get_tree().quit(0)
@@ -41,3 +57,15 @@ func _capture(name: String) -> void:
 		printerr("Screenshot failed: ", path)
 		get_tree().quit(1)
 	print("Screenshot saved: ", path)
+func _record_loop(seconds: float) -> PackedFloat32Array:
+	Audio.stop()
+	Audio._voices.clear()
+	Audio.bpm = 120.0
+	Audio.start_recording()
+	Audio.start()
+	Audio._next_step_pos = Audio._sample_counter
+	var count := int(seconds * Audio.MIX_RATE)
+	while Audio._rec_buffer.size() < count:
+		await get_tree().process_frame
+	Audio.stop()
+	return Audio.stop_recording().slice(0, count)

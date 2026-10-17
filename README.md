@@ -4,18 +4,31 @@
 
 TrashBeats 是一个用 Godot 制作的音乐交互原型，来自 MTX 音乐交互线上 1 组。敲一敲罐子或纸箱，录成短音色，放进节奏网格；也可以先用内置音色开始创作。
 
-[Windows 试玩版](https://github.com/L1xy6/Trashbeats/releases) · [English](docs/README.en.md) · [运行与构建](docs/BUILDING.md) · [反馈问题](https://github.com/L1xy6/Trashbeats/issues)
+[**下载 Windows 试玩版**](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-windows-x86_64.zip) · [English](docs/README.en.md) · [运行与构建](docs/BUILDING.md) · [反馈问题](https://github.com/L1xy6/Trashbeats/issues)
+
+**Windows x64 · 约 38 MB · 解压即用，无需安装 Godot · 中文界面 · MIT** · [版本说明](https://github.com/L1xy6/Trashbeats/releases/tag/v0.1.0-preview.1)
+
+[先听 8 秒效果（WAV，约 0.7 MB）](docs/audio/quickstart-before-after.wav)：前 4 秒是下面上手步骤的种子节奏，后 4 秒是智能续写后的结果。音频由实际程序导出，使用内置程序化音色，不是真实废弃物录音。
 
 ![TrashBeats 的节奏编曲界面，包含四个物件音色轨道和可编辑网格](docs/images/sequencer.png)
+
+截图中的「AI 模式」指本地规则续写；下方「生成旋律」是另外的可选云端服务。
 
 > **当前状态：课程原型，界面为中文。** 预置音色、节奏编排和智能续写可离线使用，无需账号或 API 密钥。云端生成旋律是可选功能，需要使用者自己的天琴接口权限。
 
 ## 先做一段节奏
 
-1. 下载 [Releases](https://github.com/L1xy6/Trashbeats/releases) 中的 Windows ZIP，解压后运行 `Trashbeats.exe`。
+1. 下载 [Windows ZIP](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-windows-x86_64.zip)，解压后运行 `Trashbeats.exe`。
 2. 点底部 **「编曲」→「新建编曲」**，选择 **4/4 拍 · 16 格**。
 3. 在第一行的第 **1、5、9、13** 格放音符，第二行的第 **5、13** 格放音符，然后点 **「播放」**。
 4. 点 **「智能续写」**补充节奏。结果可以继续编辑，也可以用 **「取消智能续写」**撤回。
+
+<details>
+<summary>查看同一段节奏续写后的界面</summary>
+
+![由种子节奏生成的续写音符，可继续编辑或撤回](docs/images/continuation.png)
+
+</details>
 
 不需要麦克风即可完成以上体验。想加入自己的声音，进入 **「寻宝」**页，填写名字、点「录制」、敲击物件、停止后点「确定」，再到编曲页添加该音色轨道。
 
@@ -59,7 +72,7 @@ cd Trashbeats
 godot --editor --path .
 ```
 
-命令行示例假定 Godot 已加入 PATH。完整的 Windows 操作、测试、导出和可选服务配置见 [运行与构建](docs/BUILDING.md)。
+命令行示例假定 Godot 已加入 PATH。[GitHub 自动检查](https://github.com/L1xy6/Trashbeats/actions/workflows/checks.yml)会在每次提交时验证源码和离线功能。完整的 Windows 操作、测试、导出和可选服务配置见 [运行与构建](docs/BUILDING.md)。
 
 ## 项目结构
 

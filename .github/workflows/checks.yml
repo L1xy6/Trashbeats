@@ -1,0 +1,36 @@
+name: Project checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Check source hygiene and documentation links
+        run: python tools/check_publish.py
+      - name: Download official Godot 4.7.1 and verify checksum
+        shell: pwsh
+        run: |
+          $base = 'https://github.com/godotengine/godot/releases/download/4.7.1-stable'
+          $asset = 'Godot_v4.7.1-stable_win64.exe.zip'
+          $zip = Join-Path $env:RUNNER_TEMP $asset
+          $checksums = Join-Path $env:RUNNER_TEMP 'godot-SHA512-SUMS.txt'
+          Invoke-WebRequest "$base/$asset" -OutFile $zip
+          Invoke-WebRequest "$base/SHA512-SUMS.txt" -OutFile $checksums
+          $line = Get-Content $checksums | Where-Object { $_ -match ([regex]::Escape($asset) + '$') }
+          if (@($line).Count -ne 1) { throw 'Expected one checksum entry.' }
+          $expected = ($line -split '\s+')[0]
+          if ((Get-FileHash $zip -Algorithm SHA512).Hash -ne $expected) { throw 'Godot checksum mismatch.' }
+          Expand-Archive -LiteralPath $zip -DestinationPath (Join-Path $env:RUNNER_TEMP 'godot')
+      - name: Run isolated offline smoke tests
+        shell: pwsh
+        run: ./tests/run_smoke.ps1 -Godot (Join-Path $env:RUNNER_TEMP 'godot/Godot_v4.7.1-stable_win64_console.exe')

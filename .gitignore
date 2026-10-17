@@ -1,0 +1,26 @@
+# Godot-generated caches and local export credentials (at any depth)
+.godot/
+.import/
+export_credentials.cfg
+
+# Builds, local recordings, and drafts
+build/
+dist/
+shots/
+*.exe
+*.pck
+*.zip
+*.bak
+*.tmp
+*.log
+.env
+.env.*
+!.env.example
+*.local.cfg
+.DS_Store
+Thumbs.db
+
+# Python validation cache
+__pycache__/
+*.py[cod]
+docs/**/*.import

@@ -15,9 +15,25 @@ const COL_AI = Color("5cdb4a")     # deeper green for AI-note distinction only
 
 static var _pixel: Font = null
 static var _cjk: Font = null
+static var _mac: FontFile = null
+
+## Package the macOS fonts instead of relying on machine-specific font caches.
+static func mac_font() -> FontFile:
+	if _mac == null:
+		var bundled: FontFile = load("res://fonts/NotoSansSC-Regular.otf")
+		var emoji: FontFile = load("res://fonts/NotoEmoji-Variable.ttf")
+		bundled.allow_system_fallback = false
+		emoji.allow_system_fallback = false
+		bundled.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
+		bundled.fallbacks = [emoji]
+		_mac = bundled
+	return _mac
 
 static func cjk_font() -> Font:
 	if _cjk == null:
+		if OS.get_name() == "macOS":
+			_cjk = mac_font()
+			return _cjk
 		var sf = SystemFont.new()
 		sf.font_names = ["Microsoft YaHei", "Noto Sans SC", "PingFang SC", "Segoe UI Emoji", "sans-serif"]
 		sf.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
@@ -30,6 +46,8 @@ static func pixel_font() -> Font:
 		if ResourceLoader.exists("res://fonts/PressStart2P-Regular.ttf"):
 			var pf: FontFile = load("res://fonts/PressStart2P-Regular.ttf")
 			pf.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
+			if OS.get_name() == "macOS":
+				pf.allow_system_fallback = false
 			pf.fallbacks = [cjk_font()]
 			_pixel = pf
 		else:

@@ -11,6 +11,9 @@ var _current = -1
 
 func _ready() -> void:
 	UIKit.full_rect(self)
+	if OS.get_name() == "macOS":
+		theme = Theme.new()
+		theme.default_font = UIKit.cjk_font()
 
 	# animated arcade background
 	var bg = ColorRect.new()

@@ -1,6 +1,6 @@
 # TrashBeats 0.1.0 预览版 · macOS
 
-支持 Apple 芯片（M 系列）和 Intel Mac，同一个 Universal 2 应用。系统最低要求为 macOS 11；旧系统与不同音频设备的完整兼容性仍需实际测试。界面为中文，无需安装 Godot。
+支持 Apple 芯片（M 系列）和 Intel Mac，同一个 Universal 2 应用。系统最低要求为 macOS 11；旧系统与不同音频设备的完整兼容性仍需实际测试。界面为中文，内置中文与图标字体，无需安装 Godot 或额外字体。
 
 ## 打开
 
@@ -17,7 +17,7 @@
 
 ## English
 
-One Universal 2 app for Apple Silicon and Intel Macs; macOS 11 or newer. The UI is Chinese and Godot does not need to be installed. Older OS releases and different audio devices still require manual compatibility testing.
+One Universal 2 app for Apple Silicon and Intel Macs; macOS 11 or newer. Chinese and icon fonts are bundled; no Godot or extra font installation is required. Older OS releases and different audio devices still require manual compatibility testing.
 
 1. Extract the entire ZIP **on your Mac**, then move `Trashbeats.app` to Applications. Transfer the original ZIP rather than an app folder unpacked on Windows, which can lose executable permissions.
 2. Open the app. This preview is ad-hoc signed, **not Apple-notarized**. If the developer cannot be verified, confirm that the file came from this project, then use **System Settings → Privacy & Security → Open Anyway** for this app. Keep system security protection enabled.

@@ -25,6 +25,7 @@ func _ready() -> void:
 		return
 	Audio.set_process(false)
 	seed(20261017)
+	_test_portable_fonts()
 	_test_synthesis_and_sound_edit()
 	_test_persistence()
 	_test_transport()
@@ -36,6 +37,17 @@ func _ready() -> void:
 	await get_tree().process_frame
 	print("SMOKE TEST: %d checks, %d failures" % [_checks, _failures])
 	get_tree().quit(1 if _failures > 0 else 0)
+
+func _test_portable_fonts() -> void:
+	var font := UIKit.mac_font()
+	_check(not font.allow_system_fallback, "Mac UI uses its bundled font without system fallback")
+	var chinese_present := true
+	for character in "拾音寻宝乐器库编曲录制播放保存":
+		chinese_present = chinese_present and font.has_char(character.unicode_at(0))
+	_check(chinese_present, "bundled Mac font contains Chinese navigation and recording labels")
+	var emoji := font.fallbacks[0] as FontFile
+	_check(emoji != null and not emoji.allow_system_fallback and emoji.has_char(0x1F3B5), "bundled emoji fallback includes the music-note icon")
+	_check(font.get_string_size("拾音 TrashBeats 🎵").x > 0, "mixed Chinese, Latin and emoji text can be shaped")
 
 func _test_synthesis_and_sound_edit() -> void:
 	var buffers := [Synth.kick(44100), Synth.woodblock(44100), Synth.bell(44100), Synth.tom(44100)]

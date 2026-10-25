@@ -36,7 +36,9 @@ def check(app):
             cwd=temporary, env=env, capture_output=True, text=True, timeout=90,
         )
         output = result.stdout + result.stderr
-        print(output)
+        print(output[:12000])
+        if len(output) > 12000:
+            print(f"[Repeated startup output truncated: {len(output)} characters total]")
         assert result.returncode == 0, f"Startup exit {result.returncode}"
         assert "Godot Engine v4.7.1.stable.official.a13da4feb" in output
         assert "SCRIPT ERROR:" not in output and "ERROR:" not in output, "Startup error"

@@ -59,6 +59,18 @@ godot --headless --path . --export-release "Windows Desktop" build/windows/Trash
 
 Windows 导出采用内嵌资源包。发行 ZIP 还应包含项目 MIT 许可、字体 OFL、第三方说明和 Godot 的引擎许可/版权声明。不要把旧版预编译 EXE 当作新源码的构建产物。
 
+## macOS 导出
+
+直接试玩见 [Mac 使用说明](MACOS.md)。在 Mac 安装匹配的 Godot 编辑器与 macOS export template 后，可运行：
+
+```sh
+python3 tools/build_macos.py --godot /Applications/Godot.app/Contents/MacOS/Godot
+```
+
+脚本导出 Universal 2 `.app`，检查 arm64/x86_64 架构、ad-hoc 签名、麦克风权限及无界面启动，再用 macOS `ditto` 打包以保留执行权限。产物位于 `dist/`，包含双语使用说明、许可与校验值。不要在 Windows 解压并重新压缩这个应用包。
+
+[macOS 自动构建](https://github.com/L1xy6/Trashbeats/actions/workflows/macos.yml)在 Apple Silicon 上导出、在 Intel 上验证同一个 ZIP，两边都执行隔离离线检查。构建使用经 SHA256 核对的官方 Godot 4.7.1 下载文件。Apple Developer ID 签名与公证尚未配置；无需向构建提供 Apple 账号或证书。
+
 ## Web 和其他平台
 
 Web 导出是实验性开发配置，不是本次已经验证的试玩方式。安装匹配的 Web 模板后：
@@ -72,7 +84,7 @@ Windows 可设置 `GODOT` 为可执行文件路径后运行 `build_web.bat`。�
 
 当前代码会在 Web 环境禁用麦克风录制。系统字体、文件选择/导入、文件下载、音频自动播放限制和存档行为需要单独适配与测试；不能把桌面功能列表当作浏览器支持保证。不要将服务密钥嵌入 Web 导出中。
 
-Linux 和 macOS 的预设也未经过完整跨平台验证。macOS 发行签名、公证和麦克风授权体验需要发布者自行完成。
+Linux 预设未经过完整验证。macOS 的真实麦克风、扬声器、图形界面和不同系统版本仍需人工验证。
 
 ## 可选的云端旋律
 
@@ -96,4 +108,4 @@ $env:TRASHBEATS_TIANQIN_APP_KEY = '<your-app-key>'
 
 ## 测试边界
 
-自动化检查覆盖程序逻辑，界面截图用于查看布局。实际麦克风、不同音频设备、云端生成以及 macOS/Linux/Web 完整流程仍需要人工验证。节奏 WAV 导出不包含独立播放的背景旋律和麦克风音轨。
+自动化检查覆盖程序逻辑、macOS 包结构和无界面启动，现有界面截图来自 Windows。实际麦克风、不同音频设备、云端生成以及完整跨平台图形操作仍需要人工验证。节奏 WAV 导出不包含独立播放的背景旋律和麦克风音轨。

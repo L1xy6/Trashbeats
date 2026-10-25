@@ -2,11 +2,13 @@
 
 **Make instruments from everyday objects, then build a beat with them.**
 
-[中文](../README.md) · [**Download for Windows**](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-windows-x86_64.zip) · [Build guide](BUILDING.en.md)
+[中文](../README.md) · [**Download for Windows**](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-windows-x86_64.zip) · [**Download for Mac**](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-macos-universal.zip) · [Build guide](BUILDING.en.md)
 
 TrashBeats is a Godot music-making prototype developed by MTX music-interaction online group 1. Record an object being tapped, turn the recording into a short percussion sample, and arrange it in a step sequencer. Four synthesized sounds let you try the workflow without a microphone.
 
 **Windows x64 · ~38 MB · unzip and run · no Godot installation required · Chinese UI · MIT** · [Release notes](https://github.com/L1xy6/Trashbeats/releases/tag/v0.1.0-preview.1)
+
+**Mac: Apple Silicon and Intel in one app, macOS 11+.** Extract on your Mac and move `Trashbeats.app` to Applications. This preview is ad-hoc signed, not Apple-notarized. See the [Mac first-open and microphone guide](MACOS.md).
 
 [Hear an 8-second example (WAV, ~0.7 MB)](audio/quickstart-before-after.wav). The first four seconds play the quick-start seed pattern; the next four play its continuation. This is actual app output using procedural presets, not recorded objects.
 
@@ -16,7 +18,7 @@ The screenshot’s “AI 模式” label refers to offline rules. Cloud melody g
 
 ## Try it
 
-Download the [Windows ZIP](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-windows-x86_64.zip), extract it, and run `Trashbeats.exe`. The current interface is in Chinese.
+Download the ZIP for your platform using the links above. On Windows, extract and run `Trashbeats.exe`; on Mac, extract and open `Trashbeats.app`. The current interface is in Chinese.
 
 1. Click **编曲** (arrange) in the bottom navigation, then **新建编曲** (new arrangement).
 2. Choose **4/4 · 16 格**. Click steps 1, 5, 9 and 13 in the first row and steps 5 and 13 in the second row.
@@ -43,7 +45,7 @@ If you do not have a microphone, the preset workflow above still works. Use head
 - Rhythm recording and separate microphone recording with WAV export. Rhythm exports do not combine all backing and microphone tracks into one final song.
 - An optional Tianqin cloud melody integration. It requires your own authorized credentials and has not been tested online for this release.
 
-This is a course prototype, validated primarily on Windows. Camera recognition, mobile delivery and multiplayer remain proposal ideas. Other platform export presets are experimental. The audio engine currently has 12 instrument slots. Hardware microphone capture has not been tested as part of automated checks.
+This is a course prototype with Windows and macOS preview packages. Mac automation checks both architectures, signatures, offline logic and headless startup; physical audio and graphical interaction still need manual testing. Camera recognition, mobile delivery and multiplayer remain proposal ideas. Linux and Web export presets are experimental. The audio engine currently has 12 instrument slots.
 
 ## Development
 

@@ -4,9 +4,11 @@
 
 TrashBeats 是一个用 Godot 制作的音乐交互原型，来自 MTX 音乐交互线上 1 组。敲一敲罐子或纸箱，录成短音色，放进节奏网格；也可以先用内置音色开始创作。
 
-[**下载 Windows 试玩版**](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-windows-x86_64.zip) · [English](docs/README.en.md) · [运行与构建](docs/BUILDING.md) · [反馈问题](https://github.com/L1xy6/Trashbeats/issues)
+[**下载 Windows 试玩版**](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-windows-x86_64.zip) · [**下载 Mac 试玩版**](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-macos-universal.zip) · [English](docs/README.en.md) · [运行与构建](docs/BUILDING.md) · [反馈问题](https://github.com/L1xy6/Trashbeats/issues)
 
 **Windows x64 · 约 38 MB · 解压即用，无需安装 Godot · 中文界面 · MIT** · [版本说明](https://github.com/L1xy6/Trashbeats/releases/tag/v0.1.0-preview.1)
+
+**Mac：Apple 芯片与 Intel 通用，macOS 11+。** 在 Mac 解压并将 `Trashbeats.app` 拖入「应用程序」。本预览版未通过 Apple 公证；首次打开及麦克风授权见 [Mac 使用说明](docs/MACOS.md)。
 
 [先听 8 秒效果（WAV，约 0.7 MB）](docs/audio/quickstart-before-after.wav)：前 4 秒是下面上手步骤的种子节奏，后 4 秒是智能续写后的结果。音频由实际程序导出，使用内置程序化音色，不是真实废弃物录音。
 
@@ -18,7 +20,7 @@ TrashBeats 是一个用 Godot 制作的音乐交互原型，来自 MTX 音乐交
 
 ## 先做一段节奏
 
-1. 下载 [Windows ZIP](https://github.com/L1xy6/Trashbeats/releases/download/v0.1.0-preview.1/Trashbeats-0.1.0-preview.1-windows-x86_64.zip)，解压后运行 `Trashbeats.exe`。
+1. 下载对应系统的 ZIP：Windows 解压后运行 `Trashbeats.exe`；Mac 解压后打开 `Trashbeats.app`。
 2. 点底部 **「编曲」→「新建编曲」**，选择 **4/4 拍 · 16 格**。
 3. 在第一行的第 **1、5、9、13** 格放音符，第二行的第 **5、13** 格放音符，然后点 **「播放」**。
 4. 点 **「智能续写」**补充节奏。结果可以继续编辑，也可以用 **「取消智能续写」**撤回。
@@ -54,7 +56,7 @@ TrashBeats 是一个用 Godot 制作的音乐交互原型，来自 MTX 音乐交
 
 ## 范围与限制
 
-本次发布以 Windows 桌面版为验证目标。macOS、Linux 和 Web 导出配置供继续开发使用，尚未完成对应平台的完整测试。
+提供 Windows 和 macOS 预览包。Mac 自动流程检查双架构、签名完整性、离线逻辑和无界面启动；实际麦克风、扬声器及图形界面仍需人工验证。Linux 和 Web 目前只有开发用导出配置。
 
 - 原提案中的拍照识别材质、微信小程序和多人社区尚未实现。
 - 云端旋律生成默认未配置，也未在本次发布中进行在线验证；本地 WAV 导入和离线续写不依赖它。

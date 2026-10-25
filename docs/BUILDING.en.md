@@ -42,7 +42,19 @@ godot --headless --editor --path . --import
 godot --headless --path . --export-release "Windows Desktop" build/windows/Trashbeats.exe
 ```
 
-Include the project MIT license, font OFL and Godot notices when distributing the binary. The repository's Linux, macOS and Web presets are experimental and have not had complete platform validation. This prototype disables microphone input on Web; do not assume the desktop feature set works unchanged in a browser.
+Include the project MIT license, font OFL and Godot notices when distributing the binary. Linux and Web presets remain experimental. This prototype disables microphone input on Web; do not assume the desktop feature set works unchanged in a browser.
+
+## Export macOS
+
+For the ready-made app, see the [Mac guide](MACOS.md). On a Mac with the matching editor and macOS export template installed:
+
+```sh
+python3 tools/build_macos.py --godot /Applications/Godot.app/Contents/MacOS/Godot
+```
+
+The script exports one Universal 2 app, verifies both architectures, its ad-hoc signature, microphone entitlements and headless startup, then packages it with `ditto` to preserve Unix executable permissions. The ZIP, bilingual first-run notes, licenses and checksum are in `dist/`. Do not unpack/repack the app on Windows.
+
+The [macOS workflow](https://github.com/L1xy6/Trashbeats/actions/workflows/macos.yml) builds on Apple Silicon, checks the same package on Intel, and runs isolated offline checks on both. Official Godot 4.7.1 assets are SHA256-pinned. Developer ID signing and Apple notarization are not configured. Automated checks do not validate real microphone/speaker output, graphical interaction, Gatekeeper dialogs or every macOS release.
 
 ## Optional cloud melody generation
 

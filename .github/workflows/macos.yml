@@ -1,0 +1,72 @@
+name: macOS package and checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'project.godot'
+      - 'export_presets.cfg'
+      - 'scripts/**'
+      - 'scenes/**'
+      - 'fonts/**'
+      - 'shaders/**'
+      - 'tests/**'
+      - 'tools/**'
+      - 'docs/MACOS.md'
+      - 'licenses/**'
+      - 'LICENSE'
+      - 'THIRD_PARTY_NOTICES.md'
+      - '.github/workflows/macos.yml'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apple-silicon:
+    runs-on: macos-14
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Check publication files
+        run: python3 tools/check_publish.py
+      - name: Download checksum-pinned official editor and templates
+        run: python3 tools/setup_godot_macos.py "$RUNNER_TEMP/godot"
+      - name: Run isolated offline checks on Apple Silicon
+        shell: pwsh
+        run: ./tests/run_smoke.ps1 -Godot (Join-Path $env:RUNNER_TEMP 'godot/Godot.app/Contents/MacOS/Godot')
+      - name: Export, verify and package the Universal 2 application
+        run: python3 tools/build_macos.py --godot "$RUNNER_TEMP/godot/Godot.app/Contents/MacOS/Godot"
+      - name: Keep the Mac package
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: Trashbeats-macos-universal
+          path: |
+            dist/Trashbeats-0.1.0-preview.1-macos-universal.zip
+            dist/SHA256SUMS-macos.txt
+          if-no-files-found: error
+          retention-days: 14
+
+  intel:
+    needs: apple-silicon
+    runs-on: macos-15-intel
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: Trashbeats-macos-universal
+          path: dist
+      - name: Verify and unpack the same package
+        run: |
+          cd dist
+          shasum -a 256 -c SHA256SUMS-macos.txt
+          ditto -x -k Trashbeats-0.1.0-preview.1-macos-universal.zip "$RUNNER_TEMP/mac-package"
+      - name: Verify signature, architectures, entitlements and Intel startup
+        run: python3 tools/check_macos.py "$RUNNER_TEMP/mac-package/Trashbeats.app"
+      - name: Download the checksum-pinned editor for offline checks
+        run: python3 tools/setup_godot_macos.py "$RUNNER_TEMP/godot" --editor-only
+      - name: Run isolated offline checks on Intel
+        shell: pwsh
+        run: ./tests/run_smoke.ps1 -Godot (Join-Path $env:RUNNER_TEMP 'godot/Godot.app/Contents/MacOS/Godot')

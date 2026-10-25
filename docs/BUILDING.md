@@ -3,7 +3,7 @@
 ## 环境
 
 - Godot **4.7.1 Standard**，项目使用 GDScript，不需要 .NET。
-- Windows 是本次发行验证的平台，界面使用系统中文字体。Linux 可安装 Noto Sans CJK 以避免中文缺字。
+- Windows 与 macOS 提供预览包；Mac 自带 Noto 中文和图标字体，Windows 使用系统中文字体。Linux 可安装 Noto Sans CJK 以避免中文缺字。
 - 导出程序需要与编辑器版本一致的 **4.7.1 export templates**，在 Godot 的 **Editor → Manage Export Templates** 中安装。
 - 源码不包含 Godot 引擎安装包。下载地址：https://godotengine.org/download/archive/4.7.1-stable/
 

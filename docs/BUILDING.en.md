@@ -19,7 +19,7 @@ godot --headless --editor --path . --import
 godot --path .
 ```
 
-The interface uses a system CJK font. Windows normally supplies Microsoft YaHei. On Linux, install a font such as Noto Sans CJK if Chinese characters are missing.
+The Mac package bundles Noto Chinese and icon fonts. Windows normally supplies Microsoft YaHei. On Linux, install a font such as Noto Sans CJK if Chinese characters are missing.
 
 ## Checks
 
